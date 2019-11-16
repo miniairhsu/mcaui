@@ -9,5 +9,6 @@ namespace mca
     interface Inetwork_Observer<T>
     {
         void Update(T updateData);
+        void UpdateB(T updateData);
     }
 }

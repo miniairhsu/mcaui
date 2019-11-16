@@ -85,20 +85,16 @@ namespace mca
             Console.WriteLine($"In RX");
             while (true)
             {
-                int recv = newsock.ReceiveFrom(this.adInfo.adaData, ref Remote); // receive packets
-                /*if ( ((this.adInfo.adaData[0] == this.adInfo.ADA_HH) && (this.adInfo.adaData[1] == this.adInfo.ADA_HL)) || ((this.adInfo.adaData[0] == this.adInfo.ADB_HH) && (this.adInfo.adaData[1] == this.adInfo.ADB_HL)) )
-                {
-                    foreach (var observer in observerList)
-                    {
-                        observer.Update(this.adInfo);
-                    }
-                }*/
+                int recv = newsock.ReceiveFrom(this.adInfo.adaData, ref Remote); // receive packett
                 foreach (var observer in observerList)
                 {
-                    if((this.adInfo.adaData[0] == this.adInfo.ADA_HH) && (this.adInfo.adaData[1] == this.adInfo.ADA_HL))
+                    if (((this.adInfo.adaData[0] == this.adInfo.ADA_HH) && (this.adInfo.adaData[1] == this.adInfo.ADA_HL)))
+                    {
                         observer.Update(this.adInfo);
-                    if ((this.adInfo.adaData[0] == this.adInfo.ADB_HH) && (this.adInfo.adaData[1] == this.adInfo.ADB_HL))
+                    }else if (((this.adInfo.adaData[0] == this.adInfo.ADB_HH) && (this.adInfo.adaData[1] == this.adInfo.ADB_HL)))
+                    {
                         observer.UpdateB(this.adInfo);
+                    }
                 }
             }
         }

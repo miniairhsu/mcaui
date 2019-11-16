@@ -39,15 +39,15 @@ namespace mca
             Network_Observer udpObserver = new Network_Observer();
             cmdObservable = new Command_Observable();
             cmdObservable.addUDP_Observer(udpObservable);
-            udpObserver.adChanged += this.ShowInfo;
-            udpObserver.adbChanged += this.ShowInfoB;
+            udpObserver.adChanged = this.ShowInfo;
+            udpObserver.adbChanged = this.ShowInfoB;
             udpObservable.addObserver(udpObserver);
             adaChartThread = new Thread(new ThreadStart(this.RunADAUpdate));
             adaChartThread.IsBackground = true;
             adaChartThread.Start();
-            adbChartThread = new Thread(new ThreadStart(this.RunADAUpdate));
-            adbChartThread.IsBackground = true;
-            adbChartThread.Start();
+            //adbChartThread = new Thread(new ThreadStart(this.RunADBUpdate));
+            //adbChartThread.IsBackground = true;
+            //adbChartThread.Start();
             udpObservable.startRx();
 
         }
@@ -57,12 +57,27 @@ namespace mca
             adaLength = (adData.adaData[3] << 8 | adData.adaData[2]);
             adaIndex = (adData.adaData[5] << 8 | adData.adaData[4]);
             adaPkt_size = (adData.adaData[7] << 8 | adData.adaData[6]);
+            //Console.WriteLine("ada index {0:D}", adbIndex);
+            //Console.WriteLine("ada size {0:D}", adbPkt_size);
+            //if ((adData.adaData[0] == this.adInfo.ADA_HH) && (adData.adaData[1] == this.adInfo.ADA_HL))
+            //{
             Buffer.BlockCopy(adData.adaData, 8, adData.adaDataShort, (adaIndex * adaLength * sizeof(short)), (adaLength * sizeof(short)));
+            //}
             if (adaIndex == adaPkt_size)
             {
                 adaPlotOn = true;
             }
             else adaPlotOn = false;
+
+            /*if ((adData.adaData[0] == this.adInfo.ADB_HH) && (adData.adaData[1] == this.adInfo.ADB_HL))
+            {
+                Buffer.BlockCopy(adData.adaData, 8, adData.adbDataShort, (adaIndex * adaLength * sizeof(short)), (adaLength * sizeof(short)));
+            }
+            if ((adaIndex == adaPkt_size) && (adData.adaData[0] == this.adInfo.ADB_HH) && (adData.adaData[1] == this.adInfo.ADB_HL))
+            {
+                adbPlotOn = true;
+            }
+            else adbPlotOn = false;*/
         }
 
         public void ShowInfoB(InfoGlobal adData)
@@ -70,8 +85,10 @@ namespace mca
             adbLength = (adData.adaData[3] << 8 | adData.adaData[2]);
             adbIndex = (adData.adaData[5] << 8 | adData.adaData[4]);
             adbPkt_size = (adData.adaData[7] << 8 | adData.adaData[6]);
-            Buffer.BlockCopy(adData.adaData, 8, adData.adbDataShort, (adaIndex * adaLength * sizeof(short)), (adaLength * sizeof(short)));
-            if(adbIndex == adbPkt_size)
+            //Console.WriteLine("adb index {0:D}", adbIndex);
+            //Console.WriteLine("adb size {0:D}", adbPkt_size);
+            Buffer.BlockCopy(adData.adaData, 8, adData.adbDataShort, (adbIndex * adbLength * sizeof(short)), (adbLength * sizeof(short)));
+            if (adbIndex == adbPkt_size)
             {
                 adbPlotOn = true;
             }
@@ -85,6 +102,10 @@ namespace mca
                 if ((adaPlot.IsHandleCreated && (adaPlotOn == true)))
                 {
                     this.Invoke((MethodInvoker)delegate { UpdateADAChart(); });
+                }
+                else if((adbPlot.IsHandleCreated && (adbPlotOn == true)))
+                {
+                    this.Invoke((MethodInvoker)delegate { UpdateADBChart(); });
                 }
             }
         }
@@ -102,29 +123,25 @@ namespace mca
 
         private void UpdateADBChart()
         {
-            if (adbPlotOn == true)
+            adbPlot.Series["ADBSeries"].Points.Clear();
+            adbPlot.ChartAreas[0].AxisX.Maximum = adbLength * adbPkt_size;
+            adbPlot.ChartAreas[0].AxisX.Minimum = 0;
+            for (int i = 0; i < adbLength * adbPkt_size; i++)
             {
-                adbPlot.Series["ADBSeries"].Points.Clear();
-                adbPlot.ChartAreas[0].AxisX.Maximum = adbLength * adbPkt_size;
-                adbPlot.ChartAreas[0].AxisX.Minimum = 0;
-                for (int i = 0; i < adbLength * adbPkt_size; i++)
-                {
-                    adbPlot.Series["ADBSeries"].Points.AddY((double)adInfo.adbDataShort[i] / 4);
-                }
+                adbPlot.Series["ADBSeries"].Points.AddY((double)adInfo.adbDataShort[i] / 4);
             }
         }
+
         private void UpdateADAChart()
         {
-            if (adaPlotOn == true)
+            adaPlot.Series["ADSeries"].Points.Clear();
+            adaPlot.ChartAreas[0].AxisX.Maximum = adaLength * adaPkt_size;
+            adaPlot.ChartAreas[0].AxisX.Minimum = 0;
+            for (int i = 0; i < adaLength * adaPkt_size; i++)
             {
-                adaPlot.Series["ADSeries"].Points.Clear();
-                adaPlot.ChartAreas[0].AxisX.Maximum = adaLength * adaPkt_size;
-                adaPlot.ChartAreas[0].AxisX.Minimum = 0;
-                for (int i = 0; i < adaLength * adaPkt_size; i++)
-                {
-                    adaPlot.Series["ADSeries"].Points.AddY((double)adInfo.adaDataShort[i] / 4);
-                }
+                adaPlot.Series["ADSeries"].Points.AddY((double)adInfo.adaDataShort[i] / 4);
             }
+           
         }
 
         private void sendButton_MouseClick(object sender, MouseEventArgs e)
@@ -136,6 +153,7 @@ namespace mca
         {
             
             adaChartThread.Abort();
+            //adbChartThread.Abort();
             udpObservable.stopRx();
         }
 

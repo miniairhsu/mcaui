@@ -103,7 +103,7 @@
             legend2.Name = "Legend1";
             this.adbPlot.Legends.Add(legend2);
             this.adbPlot.Location = new System.Drawing.Point(748, 83);
-            this.adbPlot.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.adbPlot.Margin = new System.Windows.Forms.Padding(4);
             this.adbPlot.Name = "adbPlot";
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
@@ -111,8 +111,8 @@
             series2.Name = "ADBSeries";
             this.adbPlot.Series.Add(series2);
             this.adbPlot.Size = new System.Drawing.Size(720, 552);
-            this.adbPlot.TabIndex = 5;
-            this.adbPlot.Text = "ADSeries";
+            this.adbPlot.TabIndex = 0;
+            this.adbPlot.Text = "ADC value";
             // 
             // Form1
             // 
