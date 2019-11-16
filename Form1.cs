@@ -20,6 +20,7 @@ namespace mca
         int adaPkt_size = 1;
         int adaLength = 1000;
         bool adaPlotOn = false;
+        bool adbPlotOn = false;
         Thread adaChartThread;
         string[] adVertical = {"100", "500", "1000", "2500", "5000", "10000", "15000", "20000", "30000", "40000"};
         public Form1()
@@ -27,6 +28,7 @@ namespace mca
             InitializeComponent();
             //GUI setup
             this.adaPlot.Legends.Clear();
+            this.adbPlot.Legends.Clear();
             this.adaVerticalBox.DataSource = adVertical;
 
             udpObservable = new Network_Observable_UDP("169.254.154.115", 1111, adInfo);
@@ -47,25 +49,35 @@ namespace mca
             adaLength = (adData.adaData[3] << 8 | adData.adaData[2]);
             adaIndex = (adData.adaData[5] << 8 | adData.adaData[4]);
             adaPkt_size = (adData.adaData[7] << 8 | adData.adaData[6]);
-            Buffer.BlockCopy(adData.adaData, 8, adData.adaDataShort, (adaIndex * adaLength * sizeof(short)), (adaLength * sizeof(short)));
-            if (adaIndex == adaPkt_size)
+            if ((adData.adaData[0] == adInfo.ADA_HH) && (adData.adaData[1] == adInfo.ADA_HL))
+            {
+                Buffer.BlockCopy(adData.adaData, 8, adData.adaDataShort, (adaIndex * adaLength * sizeof(short)), (adaLength * sizeof(short)));
+            }
+            if ((adData.adaData[0] == adInfo.ADB_HH) && (adData.adaData[1] == adInfo.ADB_HL))
+            {
+                Buffer.BlockCopy(adData.adaData, 8, adData.adbDataShort, (adaIndex * adaLength * sizeof(short)), (adaLength * sizeof(short)));
+            }
+
+            if ((adaIndex == adaPkt_size) && (adData.adaData[0] == adInfo.ADA_HH) && (adData.adaData[1] == adInfo.ADA_HL))
             {
                 adaPlotOn = true;
             }
             else adaPlotOn = false;
-            //Console.WriteLine("adaDataShort info: {0:d}", adData.adaData[3] << 8 | adData.adaData[2]);
-            //Console.WriteLine($"adaShort showinfo2 info: {adaIndex}");
-            //Console.WriteLine($"adaShort showinfo3 info: {adaPkt_size}");
-            /*Console.WriteLine($"adData1 info: {adData.adaDataShort[1]}");
-            Console.WriteLine($"adData2 info: {adData.adaDataShort[2]}");
-            Console.WriteLine($"adData3 info: {adData.adaDataShort[3]}");*/
+
+            if ((adaIndex == adaPkt_size) && (adData.adaData[0] == adInfo.ADB_HH) && (adData.adaData[1] == adInfo.ADB_HL))
+            {
+                adbPlotOn = true;
+            }
+            else adbPlotOn = false;
+
+
         }
 
         public void RunADAUpdate()
         {
             while (true)
             {
-                if (adaPlot.IsHandleCreated && adaPlotOn == true)
+                if ((adaPlot.IsHandleCreated && adaPlotOn == true) || (adbPlot.IsHandleCreated && adbPlotOn == true))
                 {
                     this.Invoke((MethodInvoker)delegate { UpdateADAChart(); });
                 }
@@ -74,13 +86,29 @@ namespace mca
 
         private void UpdateADAChart()
         {
-            adaPlot.Series["ADSeries"].Points.Clear();
-            adaPlot.ChartAreas[0].AxisX.Maximum = adaLength * adaPkt_size;
-            adaPlot.ChartAreas[0].AxisX.Minimum = 0;
-            for (int i = 0; i < adaLength * adaPkt_size; i++)
+            if (adaPlotOn == true)
             {
-                adaPlot.Series["ADSeries"].Points.AddY((double)adInfo.adaDataShort[i]/4);
+                adaPlot.Series["ADSeries"].Points.Clear();
+                adaPlot.ChartAreas[0].AxisX.Maximum = adaLength * adaPkt_size;
+                adaPlot.ChartAreas[0].AxisX.Minimum = 0;
+                for (int i = 0; i < adaLength * adaPkt_size; i++)
+                {
+                    adaPlot.Series["ADSeries"].Points.AddY((double)adInfo.adaDataShort[i] / 4);
+                }
             }
+
+            if (adbPlotOn == true)
+            {
+                adbPlot.Series["ADSeries"].Points.Clear();
+                adbPlot.ChartAreas[0].AxisX.Maximum = adaLength * adaPkt_size;
+                adbPlot.ChartAreas[0].AxisX.Minimum = 0;
+                for (int i = 0; i < adaLength * adaPkt_size; i++)
+                {
+                    adbPlot.Series["ADSeries"].Points.AddY((double)adInfo.adbDataShort[i] / 4);
+                }
+            }
+
+
         }
 
         private void sendButton_MouseClick(object sender, MouseEventArgs e)
@@ -99,6 +127,8 @@ namespace mca
         {
             adaPlot.ChartAreas[0].AxisY.Maximum = Double.Parse(adaVerticalBox.SelectedValue.ToString());
             adaPlot.ChartAreas[0].AxisY.Minimum = Double.Parse(adaVerticalBox.SelectedValue.ToString()) * -1;
+            adbPlot.ChartAreas[0].AxisY.Maximum = Double.Parse(adaVerticalBox.SelectedValue.ToString());
+            adbPlot.ChartAreas[0].AxisY.Minimum = Double.Parse(adaVerticalBox.SelectedValue.ToString()) * -1;
         }
     }
 }
