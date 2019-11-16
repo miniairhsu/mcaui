@@ -19,9 +19,13 @@ namespace mca
         int adaIndex = 0;
         int adaPkt_size = 1;
         int adaLength = 1000;
+        int adbIndex = 0;
+        int adbPkt_size = 1;
+        int adbLength = 1000;
         bool adaPlotOn = false;
         bool adbPlotOn = false;
         Thread adaChartThread;
+        Thread adbChartThread;
         string[] adVertical = {"100", "500", "1000", "2500", "5000", "10000", "15000", "20000", "30000", "40000"};
         public Form1()
         {
@@ -36,10 +40,14 @@ namespace mca
             cmdObservable = new Command_Observable();
             cmdObservable.addUDP_Observer(udpObservable);
             udpObserver.adChanged += this.ShowInfo;
+            udpObserver.adbChanged += this.ShowInfoB;
             udpObservable.addObserver(udpObserver);
             adaChartThread = new Thread(new ThreadStart(this.RunADAUpdate));
             adaChartThread.IsBackground = true;
             adaChartThread.Start();
+            adbChartThread = new Thread(new ThreadStart(this.RunADAUpdate));
+            adbChartThread.IsBackground = true;
+            adbChartThread.Start();
             udpObservable.startRx();
 
         }
@@ -49,28 +57,25 @@ namespace mca
             adaLength = (adData.adaData[3] << 8 | adData.adaData[2]);
             adaIndex = (adData.adaData[5] << 8 | adData.adaData[4]);
             adaPkt_size = (adData.adaData[7] << 8 | adData.adaData[6]);
-            if ((adData.adaData[0] == adInfo.ADA_HH) && (adData.adaData[1] == adInfo.ADA_HL))
-            {
-                Buffer.BlockCopy(adData.adaData, 8, adData.adaDataShort, (adaIndex * adaLength * sizeof(short)), (adaLength * sizeof(short)));
-            }
-            if ((adData.adaData[0] == adInfo.ADB_HH) && (adData.adaData[1] == adInfo.ADB_HL))
-            {
-                Buffer.BlockCopy(adData.adaData, 8, adData.adbDataShort, (adaIndex * adaLength * sizeof(short)), (adaLength * sizeof(short)));
-            }
-
-            if ((adaIndex == adaPkt_size) && (adData.adaData[0] == adInfo.ADA_HH) && (adData.adaData[1] == adInfo.ADA_HL))
+            Buffer.BlockCopy(adData.adaData, 8, adData.adaDataShort, (adaIndex * adaLength * sizeof(short)), (adaLength * sizeof(short)));
+            if (adaIndex == adaPkt_size)
             {
                 adaPlotOn = true;
             }
             else adaPlotOn = false;
+        }
 
-            if ((adaIndex == adaPkt_size) && (adData.adaData[0] == adInfo.ADB_HH) && (adData.adaData[1] == adInfo.ADB_HL))
+        public void ShowInfoB(InfoGlobal adData)
+        {
+            adbLength = (adData.adaData[3] << 8 | adData.adaData[2]);
+            adbIndex = (adData.adaData[5] << 8 | adData.adaData[4]);
+            adbPkt_size = (adData.adaData[7] << 8 | adData.adaData[6]);
+            Buffer.BlockCopy(adData.adaData, 8, adData.adbDataShort, (adaIndex * adaLength * sizeof(short)), (adaLength * sizeof(short)));
+            if(adbIndex == adbPkt_size)
             {
                 adbPlotOn = true;
             }
             else adbPlotOn = false;
-
-
         }
 
         public void RunADAUpdate()
@@ -81,8 +86,15 @@ namespace mca
                 {
                     this.Invoke((MethodInvoker)delegate { UpdateADAChart(); });
                 }
+            }
+        }
 
-                if ((adbPlot.IsHandleCreated && (adbPlotOn == true))){
+        public void RunADBUpdate()
+        {
+            while (true)
+            {
+                if ((adbPlot.IsHandleCreated && (adbPlotOn == true)))
+                {
                     this.Invoke((MethodInvoker)delegate { UpdateADBChart(); });
                 }
             }
@@ -93,9 +105,9 @@ namespace mca
             if (adbPlotOn == true)
             {
                 adbPlot.Series["ADBSeries"].Points.Clear();
-                adbPlot.ChartAreas[0].AxisX.Maximum = adaLength * adaPkt_size;
+                adbPlot.ChartAreas[0].AxisX.Maximum = adbLength * adbPkt_size;
                 adbPlot.ChartAreas[0].AxisX.Minimum = 0;
-                for (int i = 0; i < adaLength * adaPkt_size; i++)
+                for (int i = 0; i < adbLength * adbPkt_size; i++)
                 {
                     adbPlot.Series["ADBSeries"].Points.AddY((double)adInfo.adbDataShort[i] / 4);
                 }

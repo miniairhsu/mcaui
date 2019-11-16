@@ -10,10 +10,13 @@ namespace mca
     {
         public delegate void UpdateData(InfoGlobal adData);
         public UpdateData adChanged;
+        public delegate void UpdateDataB(InfoGlobal adData);
+        public UpdateDataB adbChanged;
 
         public Network_Observer()
         {
             adChanged = adDataChanged;
+            adbChanged = adbDataChanged;
         }
 
         /**
@@ -27,7 +30,17 @@ namespace mca
             //notify ui
         }
 
+        public void UpdateB(InfoGlobal adData)
+        {
+            adbChanged.Invoke(adData);
+        }
+
         public void adDataChanged(InfoGlobal adData)
+        {
+            return;
+        }
+        
+        public void adbDataChanged(InfoGlobal adData)
         {
             return;
         }
