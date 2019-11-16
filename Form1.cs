@@ -77,13 +77,30 @@ namespace mca
         {
             while (true)
             {
-                if ((adaPlot.IsHandleCreated && adaPlotOn == true) || (adbPlot.IsHandleCreated && adbPlotOn == true))
+                if ((adaPlot.IsHandleCreated && (adaPlotOn == true)))
                 {
                     this.Invoke((MethodInvoker)delegate { UpdateADAChart(); });
+                }
+
+                if ((adbPlot.IsHandleCreated && (adbPlotOn == true))){
+                    this.Invoke((MethodInvoker)delegate { UpdateADBChart(); });
                 }
             }
         }
 
+        private void UpdateADBChart()
+        {
+            if (adbPlotOn == true)
+            {
+                adbPlot.Series["ADBSeries"].Points.Clear();
+                adbPlot.ChartAreas[0].AxisX.Maximum = adaLength * adaPkt_size;
+                adbPlot.ChartAreas[0].AxisX.Minimum = 0;
+                for (int i = 0; i < adaLength * adaPkt_size; i++)
+                {
+                    adbPlot.Series["ADBSeries"].Points.AddY((double)adInfo.adbDataShort[i] / 4);
+                }
+            }
+        }
         private void UpdateADAChart()
         {
             if (adaPlotOn == true)
@@ -96,19 +113,6 @@ namespace mca
                     adaPlot.Series["ADSeries"].Points.AddY((double)adInfo.adaDataShort[i] / 4);
                 }
             }
-
-            if (adbPlotOn == true)
-            {
-                adbPlot.Series["ADSeries"].Points.Clear();
-                adbPlot.ChartAreas[0].AxisX.Maximum = adaLength * adaPkt_size;
-                adbPlot.ChartAreas[0].AxisX.Minimum = 0;
-                for (int i = 0; i < adaLength * adaPkt_size; i++)
-                {
-                    adbPlot.Series["ADSeries"].Points.AddY((double)adInfo.adbDataShort[i] / 4);
-                }
-            }
-
-
         }
 
         private void sendButton_MouseClick(object sender, MouseEventArgs e)

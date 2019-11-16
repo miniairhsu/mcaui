@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.adaPlot = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.sendButton = new System.Windows.Forms.Button();
             this.commandBox = new System.Windows.Forms.TextBox();
@@ -46,28 +46,26 @@
             // 
             // adaPlot
             // 
-            chartArea3.Name = "ChartArea1";
-            this.adaPlot.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.adaPlot.Legends.Add(legend3);
-            this.adaPlot.Location = new System.Drawing.Point(8, 60);
-            this.adaPlot.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            chartArea1.Name = "ChartArea1";
+            this.adaPlot.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.adaPlot.Legends.Add(legend1);
+            this.adaPlot.Location = new System.Drawing.Point(12, 83);
             this.adaPlot.Name = "adaPlot";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series3.Legend = "Legend1";
-            series3.Name = "ADSeries";
-            this.adaPlot.Series.Add(series3);
-            this.adaPlot.Size = new System.Drawing.Size(463, 399);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series1.Legend = "Legend1";
+            series1.Name = "ADSeries";
+            this.adaPlot.Series.Add(series1);
+            this.adaPlot.Size = new System.Drawing.Size(694, 552);
             this.adaPlot.TabIndex = 0;
             this.adaPlot.Text = "ADC value";
             // 
             // sendButton
             // 
-            this.sendButton.Location = new System.Drawing.Point(170, 464);
-            this.sendButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sendButton.Location = new System.Drawing.Point(255, 642);
             this.sendButton.Name = "sendButton";
-            this.sendButton.Size = new System.Drawing.Size(63, 22);
+            this.sendButton.Size = new System.Drawing.Size(94, 30);
             this.sendButton.TabIndex = 1;
             this.sendButton.Text = "Send";
             this.sendButton.UseVisualStyleBackColor = true;
@@ -75,60 +73,58 @@
             // 
             // commandBox
             // 
-            this.commandBox.Location = new System.Drawing.Point(8, 464);
-            this.commandBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.commandBox.Location = new System.Drawing.Point(12, 642);
             this.commandBox.Name = "commandBox";
-            this.commandBox.Size = new System.Drawing.Size(149, 20);
+            this.commandBox.Size = new System.Drawing.Size(222, 29);
             this.commandBox.TabIndex = 2;
             // 
             // adaVerticalBox
             // 
             this.adaVerticalBox.FormattingEnabled = true;
-            this.adaVerticalBox.Location = new System.Drawing.Point(83, 11);
-            this.adaVerticalBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.adaVerticalBox.Location = new System.Drawing.Point(124, 15);
             this.adaVerticalBox.Name = "adaVerticalBox";
-            this.adaVerticalBox.Size = new System.Drawing.Size(127, 21);
+            this.adaVerticalBox.Size = new System.Drawing.Size(188, 26);
             this.adaVerticalBox.TabIndex = 3;
             this.adaVerticalBox.SelectedIndexChanged += new System.EventHandler(this.adaVertical_changed);
             // 
             // adaLabel
             // 
             this.adaLabel.AutoSize = true;
-            this.adaLabel.Location = new System.Drawing.Point(6, 11);
-            this.adaLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.adaLabel.Location = new System.Drawing.Point(9, 15);
             this.adaLabel.Name = "adaLabel";
-            this.adaLabel.Size = new System.Drawing.Size(70, 13);
+            this.adaLabel.Size = new System.Drawing.Size(110, 18);
             this.adaLabel.TabIndex = 4;
             this.adaLabel.Text = "Veretical Axis";
             // 
             // adbPlot
             // 
-            chartArea4.Name = "ChartArea1";
-            this.adbPlot.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.adbPlot.Legends.Add(legend4);
-            this.adbPlot.Location = new System.Drawing.Point(499, 60);
+            chartArea2.Name = "ChartArea1";
+            this.adbPlot.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.adbPlot.Legends.Add(legend2);
+            this.adbPlot.Location = new System.Drawing.Point(748, 83);
+            this.adbPlot.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.adbPlot.Name = "adbPlot";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.adbPlot.Series.Add(series4);
-            this.adbPlot.Size = new System.Drawing.Size(480, 399);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series2.Legend = "Legend1";
+            series2.Name = "ADBSeries";
+            this.adbPlot.Series.Add(series2);
+            this.adbPlot.Size = new System.Drawing.Size(720, 552);
             this.adbPlot.TabIndex = 5;
             this.adbPlot.Text = "ADSeries";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(991, 670);
+            this.ClientSize = new System.Drawing.Size(1486, 928);
             this.Controls.Add(this.adbPlot);
             this.Controls.Add(this.adaLabel);
             this.Controls.Add(this.adaVerticalBox);
             this.Controls.Add(this.commandBox);
             this.Controls.Add(this.sendButton);
             this.Controls.Add(this.adaPlot);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_Closing);
