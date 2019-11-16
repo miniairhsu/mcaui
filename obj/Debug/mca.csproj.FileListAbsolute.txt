@@ -1,0 +1,9 @@
+C:\Users\minia\Documents\academy\MCA\ui\mca\bin\Debug\mca.exe.config
+C:\Users\minia\Documents\academy\MCA\ui\mca\bin\Debug\mca.exe
+C:\Users\minia\Documents\academy\MCA\ui\mca\bin\Debug\mca.pdb
+C:\Users\minia\Documents\academy\MCA\ui\mca\obj\Debug\mca.Properties.Resources.resources
+C:\Users\minia\Documents\academy\MCA\ui\mca\obj\Debug\mca.csproj.GenerateResource.cache
+C:\Users\minia\Documents\academy\MCA\ui\mca\obj\Debug\mca.exe
+C:\Users\minia\Documents\academy\MCA\ui\mca\obj\Debug\mca.pdb
+C:\Users\minia\Documents\academy\MCA\ui\mca\obj\Debug\mca.csprojAssemblyReference.cache
+C:\Users\minia\Documents\academy\MCA\ui\mca\obj\Debug\mca.Form1.resources
