@@ -53,14 +53,14 @@ namespace mca
 
         public void ShowInfo(InfoGlobal adData)
         {
-            adaLength = (adData.adaData[3] << 8 | adData.adaData[2]);
-            adaIndex = (adData.adaData[5] << 8 | adData.adaData[4]);
-            adaPkt_size = (adData.adaData[7] << 8 | adData.adaData[6]);
+            adaLength = (adData.adData[3] << 8 | adData.adData[2]);
+            adaIndex = (adData.adData[5] << 8 | adData.adData[4]);
+            adaPkt_size = (adData.adData[7] << 8 | adData.adData[6]);
             //Console.WriteLine("ada index {0:D}", adbIndex);
             //Console.WriteLine("ada size {0:D}", adbPkt_size);
             //if ((adData.adaData[0] == this.adInfo.ADA_HH) && (adData.adaData[1] == this.adInfo.ADA_HL))
             //{
-            Buffer.BlockCopy(adData.adaData, 8, adData.adaDataShort, (adaIndex * adaLength * sizeof(short)), (adaLength * sizeof(short)));
+            Buffer.BlockCopy(adData.adData, 8, adData.adaDataShort, (adaIndex * adaLength * sizeof(short)), (adaLength * sizeof(short)));
             //}
             if (adaIndex == adaPkt_size)
             {
@@ -81,12 +81,12 @@ namespace mca
 
         public void ShowInfoB(InfoGlobal adData)
         {
-            adbLength = (adData.adaData[3] << 8 | adData.adaData[2]);
-            adbIndex = (adData.adaData[5] << 8 | adData.adaData[4]);
-            adbPkt_size = (adData.adaData[7] << 8 | adData.adaData[6]);
+            adbLength = (adData.adData[3] << 8 | adData.adData[2]);
+            adbIndex = (adData.adData[5] << 8 | adData.adData[4]);
+            adbPkt_size = (adData.adData[7] << 8 | adData.adData[6]);
             //Console.WriteLine("adb index {0:D}", adbIndex);
             //Console.WriteLine("adb size {0:D}", adbPkt_size);
-            Buffer.BlockCopy(adData.adaData, 8, adData.adbDataShort, (adbIndex * adbLength * sizeof(short)), (adbLength * sizeof(short)));
+            Buffer.BlockCopy(adData.adData, 8, adData.adbDataShort, (adbIndex * adbLength * sizeof(short)), (adbLength * sizeof(short)));
             if (adbIndex == adbPkt_size)
             {
                 adbPlotOn = true;

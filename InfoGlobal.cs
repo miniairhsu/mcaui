@@ -16,6 +16,7 @@ namespace mca
         public byte ADB_HL = 0x0D;
         public byte ADB_FH = 0x0D;
         public byte ADB_FL = 0x0C;
+        public byte[] adData = new byte[16384];
         public byte[] adaData = new byte[16384];
         public byte[] dabData = new byte[16384];
         public short[] adaDataShort = new short[32768];
