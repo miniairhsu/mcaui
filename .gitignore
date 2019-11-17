@@ -1,3 +1,8 @@
 *.exe
 obj/Debug/TempPE
 *.vs/
+/bin/Debug/mca.pdb
+/obj/Debug/mca.csproj.CoreCompileInputs.cache
+/obj/Debug/mca.csproj.FileListAbsolute.txt
+/obj/Debug/mca.csproj.GenerateResource.cache
+/obj/Debug/mca.pdb 
