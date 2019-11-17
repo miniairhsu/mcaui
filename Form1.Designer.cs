@@ -29,25 +29,24 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.adaPlot = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.sendButton = new System.Windows.Forms.Button();
             this.commandBox = new System.Windows.Forms.TextBox();
             this.adaVerticalBox = new System.Windows.Forms.ComboBox();
             this.adaLabel = new System.Windows.Forms.Label();
-            this.adbPlot = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.adaPlot)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.adbPlot)).BeginInit();
             this.SuspendLayout();
             // 
             // adaPlot
             // 
             chartArea1.Name = "ChartArea1";
+            chartArea2.Name = "ChartArea2";
             this.adaPlot.ChartAreas.Add(chartArea1);
+            this.adaPlot.ChartAreas.Add(chartArea2);
             legend1.Name = "Legend1";
             this.adaPlot.Legends.Add(legend1);
             this.adaPlot.Location = new System.Drawing.Point(12, 83);
@@ -56,8 +55,13 @@
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
             series1.Legend = "Legend1";
             series1.Name = "ADSeries";
+            series2.ChartArea = "ChartArea2";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series2.Legend = "Legend1";
+            series2.Name = "ADBSeries";
             this.adaPlot.Series.Add(series1);
-            this.adaPlot.Size = new System.Drawing.Size(694, 552);
+            this.adaPlot.Series.Add(series2);
+            this.adaPlot.Size = new System.Drawing.Size(1371, 552);
             this.adaPlot.TabIndex = 0;
             this.adaPlot.Text = "ADC value";
             // 
@@ -96,30 +100,11 @@
             this.adaLabel.TabIndex = 4;
             this.adaLabel.Text = "Veretical Axis";
             // 
-            // adbPlot
-            // 
-            chartArea2.Name = "ChartArea1";
-            this.adbPlot.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.adbPlot.Legends.Add(legend2);
-            this.adbPlot.Location = new System.Drawing.Point(748, 83);
-            this.adbPlot.Margin = new System.Windows.Forms.Padding(4);
-            this.adbPlot.Name = "adbPlot";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series2.Legend = "Legend1";
-            series2.Name = "ADBSeries";
-            this.adbPlot.Series.Add(series2);
-            this.adbPlot.Size = new System.Drawing.Size(720, 552);
-            this.adbPlot.TabIndex = 0;
-            this.adbPlot.Text = "ADC value";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1486, 928);
-            this.Controls.Add(this.adbPlot);
             this.Controls.Add(this.adaLabel);
             this.Controls.Add(this.adaVerticalBox);
             this.Controls.Add(this.commandBox);
@@ -129,7 +114,6 @@
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_Closing);
             ((System.ComponentModel.ISupportInitialize)(this.adaPlot)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.adbPlot)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,7 +126,6 @@
         private System.Windows.Forms.TextBox commandBox;
         private System.Windows.Forms.ComboBox adaVerticalBox;
         private System.Windows.Forms.Label adaLabel;
-        private System.Windows.Forms.DataVisualization.Charting.Chart adbPlot;
     }
 }
 
